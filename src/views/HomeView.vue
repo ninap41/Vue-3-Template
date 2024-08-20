@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue"
-import SoundBoard from "../components/SoundBoard.vue"
+import ReadMeComponent from '@/components/ReadMeComponent.vue';
 </script>
-
 <template>
-	<SoundBoard></SoundBoard>
+	<ReadMeComponent></ReadMeComponent>
 </template>
-<style></style>

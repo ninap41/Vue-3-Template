@@ -3,17 +3,23 @@
 This template includes Vue3, Tailwind, PrimeVue, Router, and Pinia Store
 ## Relevant Links
 
+
 - [Tailwind CSS](https://tailwindcss.com/)
 - [PrimeVue](https://www.primefaces.org/primevue/)
 - [PrimeFlex](https://www.primefaces.org/primeflex/)
-- 
+
+	
 ## Customize configuration
+
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
+
 ## Project Setup
 
+
 Switch to the shell and run the following to install the packages manually (replit by default will do this for you every time you press the run button).
+
 
 ```sh
 npm install
@@ -21,7 +27,9 @@ npm install
 
 ### Compile and Hot-Reload for Development
 
+
 Pressing the run button will start your project with hot-reload for development by using the following command.
+
 
 ```sh
 npm run dev
