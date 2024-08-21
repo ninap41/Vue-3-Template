@@ -1,6 +1,7 @@
 
 <template>
-  <LogoComponent />
+  <LogoComponent class="logo-position"/>
+  <Toast />
   <ReadMeComponent></ReadMeComponent>  
 </template>
 
@@ -8,7 +9,15 @@
   import ReadMeComponent from "@/components/ReadMeComponent.vue"
   import LogoComponent from "@/components/LogoComponent.vue"
 </script>
+
 <style>
-@media (min-width: 1024px) {
-}
+
+  .logo-position {
+    position: absolute;
+    z-index: 90;
+    top: 0;
+    padding-top: 1.12rem;
+    padding-left: 1rem;
+    mix-blend-mode: soft-light;
+  }
 </style>

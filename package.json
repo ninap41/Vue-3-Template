@@ -2,7 +2,7 @@
   "name": "vue-project",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite --host",
+    "dev": "vite --host --watch",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview --host --port 3000",
     "test:unit": "vitest --environment jsdom",
@@ -30,6 +30,7 @@
     "vite-plugin-mdx": "^3.6.0",
     "vite-plugin-vue-svg": "^0.1.0",
     "vue": "^3.2.31",
+    "vue-markdown-render": "^2.2.1",
     "vue-router": "^4.0.12"
   },
   "devDependencies": {

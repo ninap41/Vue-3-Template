@@ -1,56 +1,66 @@
 # vue-project
 
 This template includes Vue3, Tailwind, PrimeVue, Router, and Pinia Store
-## Relevant Links
 
+---
+
+## Relevant Links
 
 - [Tailwind CSS](https://tailwindcss.com/)
 - [PrimeVue](https://www.primefaces.org/primevue/)
 - [PrimeFlex](https://www.primefaces.org/primeflex/)
+- Markdown Renderer
+- Dialog/ Modal Composition 
+- Toast Composition
+- local storage caching
 
-	
+---
+  
 ## Customize configuration
-
 
 See [Vite Configuration Reference](https://vitejs.dev/config/).
 
+---
 
 ## Project Setup
 
-
 Switch to the shell and run the following to install the packages manually (replit by default will do this for you every time you press the run button).
 
-
 ```sh
-npm install
+$ npm install
 ```
+---
 
 ### Compile and Hot-Reload for Development
-
 
 Pressing the run button will start your project with hot-reload for development by using the following command.
 
 
 ```sh
-npm run dev
+$ npm run dev
 ```
+---
 
 ### Run Unit Tests with [Vitest](https://vitest.dev/)
 
 Switch to shell and run the following command to run the unit tests.
 
 ```sh
-npm run test:unit
+$ npm run test:unit
 ```
+
+---
 
 ### Run End-to-End Tests with [Cypress](https://www.cypress.io/)
 
 Switch to shell and run the following commands to run the Cypress end-to-end tests.
 
 ```sh
-npm run build
-npm run test:e2e
+$ npm run build
+$ npm run test:e2e
 ```
+
+---
 
 ### Lint with [ESLint](https://eslint.org/)
 
@@ -59,8 +69,10 @@ You can configure all the preferred styles in `.eslintrc.cjs`
 Run the following command in the shell to lint your code.
 
 ```sh
-npm run lint
+$ npm run lint
 ```
+
+---
 
 ### Prepare for production and hosting.
 
