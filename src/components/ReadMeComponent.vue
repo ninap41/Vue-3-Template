@@ -1,5 +1,7 @@
 <template>
-	<vue-markdown :source="compiledMarkdown" class="markdown-content"  />
+	<div v-if="compiledMarkdown !== ''">
+	 <vue-markdown :source="compiledMarkdown" class="markdown-content"  />
+	</div>
 </template>
 
 <script setup lang="ts">
@@ -14,7 +16,6 @@ onMounted(async () => {
 			throw new Error('Failed to load Markdown file');
 		}
 		const text = await response.text();
-		console.log("text", text)
 		compiledMarkdown.value =text;
 	} catch (error) {
 		console.error('Error fetching or processing Markdown file:', error);

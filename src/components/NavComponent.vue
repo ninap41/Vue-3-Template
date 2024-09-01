@@ -1,7 +1,8 @@
 <template setup>
 	<header>
-		<RouterLink to="/">About</RouterLink>
-		<RouterLink to="/examples">Examples</RouterLink>
+		<div v-for="route in $router.options.routes" :key="route.path">"
+		<RouterLink :to="route.path">{{route.name}}</RouterLink>
+		</div>
 	</header>
 </template>
 
