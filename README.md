@@ -1,6 +1,7 @@
 # vue-project
 
-This template includes Vue3, Tailwind, PrimeVue, Router, and Pinia Store
+This template includes Vue3, Tailwind, PrimeVue, Router, and Pinia Store. Terminal (WIP with node Traversal). Composition Functions for using Modals and Toasts from PrimeVue. Initial setup in place for Node API server. Readme Renderer as well. This repo is hosted on Replit and constantly improving.
+[View Live Demo](https://vue-3-template-complete-ninap41.replit.app/)
 
 
 ![picture1](https://raw.githubusercontent.com/ninap41/Vue-3-Template/main/public/screen1.png)
