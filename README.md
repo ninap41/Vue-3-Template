@@ -2,6 +2,11 @@
 
 This template includes Vue3, Tailwind, PrimeVue, Router, and Pinia Store
 
+
+![picture1](https://raw.githubusercontent.com/ninap41/Vue-3-Template/main/public/screen1.png)
+![picture2](https://raw.githubusercontent.com/ninap41/Vue-3-Template/main/public/screen2.png)
+![picture3](https://raw.githubusercontent.com/ninap41/Vue-3-Template/main/public/screen3.png)
+
 ---
 
 ## Relevant Links
