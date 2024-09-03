@@ -23,39 +23,70 @@ import {tree } from './tree'
 	// label: 'Movies',
 	// data: 'Movies Folder',
 	// executable: () => {},
-	// children: [
-	// 		{
-	// 				key: '2-0',
-	// 			executable: () => {},
-	// 				label: 'Al Pacino',
-	// 				data: 'Pacino Movies',
-	// 				children: [
-	// 						{ key: '2-0-0', label: 'Scarface', executable: () => {}, data: 'scarface.mpeg' },
-	// 						{ key: '2-0-1', label: 'Serpico', executable: () => {}, data: 'serpico.mpeg' }
-	// 				]
-	// 		},
-	// 	]
-	let key = ref('0')
+	// children: [	]
+
+
+	const constructedPrompt = (key__: string) =>  'nina.io' + ' / ' + key__ + ' $ ' 
+	let currentTreeDepth = ref(0) // 0 is the root
+	let absoluteKey = ref("0")
 	let displayKey = ref('root')
 	let state = ref(tree)
-	let prompt_ = ref('nina.io' + ' / ' + displayKey.value + ' $ '  )
+	let prompt_ = ref(constructedPrompt(displayKey.value))
+
+
+	
+	const getNodeFromTree = (key): Array<strings> => { //"0-1"
+		const nodePath = () => { //exampleTree:  ["0", "1", "1", "0", ]  or the shallowest level ["0"]
+			let noHyphens = key.replace(/-/g, '');
+			let splitNumbers = noHyphens.split(/(?<=\d)(?=\d)/);
+			return splitNumbers
+		}
+		let treeCopy = tree;
+		currentTreeDepth.value = nodePath().length 
+		for(var i = 0 ; i < nodePath().length; i++) {
+			treeCopy = treeCopy[nodePath()[i]]
+		}
+		return treeCopy
+	}
+	
 	const commands = ref([
 		{
 				name: 'echo',
 				description: 'display styled message',
-				handler: (self, fullCommand) => {	
+				handler: (self, flags, fullCommand) => {	
 						return ``;
 				}
 		},
 		{
 				name: 'cd',
 				description: 'to navigate directories',
-				handler: (self, fullcommand) => {}
+				handler: (self,flags, fullcommand) => {
+					const targetPath = fullcommand.split(' ')[1]
+					let nextNode = null; 
+					if(currentTreeDepth.value == 0 ) {
+					 nextNode = state.value.find(node => node.label === targetPath)
+					} else {
+						 nextNode = state.value.children.find(node => node.label === targetPath)
+					}
+					if(nextNode) {
+						state.value = nextNode
+						console.log(state.value, "state.val")
+						currentTreeDepth.value += 1
+						absoluteKey.value = nextNode.key
+						displayKey.value = targetPath
+
+						 prompt_.value = constructedPrompt(targetPath)
+						return `cd ${targetPath}. Now in ${targetPath}`
+					} else {
+						return 'No such directory'
+					}
+					
+				}
 		},
 		{
 			name: "open",
 			description: "open a file",
-			handler: (self, fullCommand) =>{}
+			handler: (self, flags, fullCommand) =>{}
 		},
 		{
 			name: 'help',
@@ -67,30 +98,36 @@ import {tree } from './tree'
 			}
 		},
 		{ name: 'ls',
-		 description: 'list all folders and files in directory',
-		handler: (self,flags, fullCommand) => {
-			console.log("made it to ls")
-				const nextNodes= tree.map(node => node.children)
-			console.log("nextNodes", nextNodes)
+		  description: 'list all folders and files in directory',
+		  handler: (self,flags, fullCommand) => {
+				let list=``;
+				if(currentTreeDepth.value == 0 ) {
+					state.value.forEach(node => list += node.label + '\n')
+				} else {
+					console.log("here child?",state.value.children)
 
-			TerminalService.emit('response', `${nextNodes.map(node => node.label).join('\n')}`);
+					state.value.children.forEach(node => list += node.label + '\n')
+				}
+				return list
+
 		 }
 		}
 	]);
 	
 let  getAllCommands = commands.value.map(c => c.name).join(', ')
 	TerminalService.on('command', (command: string) =>  {
-		console.log(command, "command")
 
 		const parentCommand = command ? command.split(' ')[0] : command
-		const command_= commands.value.find(c => c.name === command)
-		console.log(parentCommand, "parentCommand")
-		console.log(commands.value, "commands")
-
+		
+		const command_= commands.value.find(c => c.name === command.split(' ')[0] )
+		const flags = command.split(' ').shift()
+		// console.log(command, "command")
+		// console.log(parentCommand, "parentCommand")
+		// console.log(commands.value, "commands")
 		if(!command_){
 			TerminalService.emit('response', `"${command_}" error: Command not found`);
 		} else {
-			TerminalService.emit('response', command_.handler(command_, command.handler));
+			TerminalService.emit('response', command_.handler(command_, flags, command));
 		}
 	})
 
@@ -102,9 +139,6 @@ let  getAllCommands = commands.value.map(c => c.name).join(', ')
 		--p-terminal-command-response-margin: rem !important;
 		/* https://primevue.org/terminal/ */
 	}
-	.p-terminal,  {
-	}
-
 	.p-terminal-command-response {
 		white-space: pre;
 	}
