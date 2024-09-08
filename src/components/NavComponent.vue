@@ -1,6 +1,6 @@
 <template setup>
 	<header>
-		<div v-for="route in $router.options.routes" :key="route.path">"
+		<div v-for="route in $router.options.routes" :key="route.path">
 		<RouterLink :to="route.path">{{route.name}}</RouterLink>
 		</div>
 	</header>

@@ -2,7 +2,8 @@
 
 <template>
 	<h1 >Terminal WIP</h1>
-	
+	<p>displayKey - {{displayKey}}</p>
+	<p>absoluteKey - {{absoluteKey }}</p>
 	<Terminal
 			welcomeMessage="Welcome to nina.io"
 			:prompt="prompt_"
@@ -18,35 +19,22 @@
 import {tree } from './tree'
 
 	
-	// {
-	// key: '2',
-	// label: 'Movies',
-	// data: 'Movies Folder',
-	// executable: () => {},
-	// children: [	]
-
-
-	const constructedPrompt = (key__: string) =>  'nina.io' + ' / ' + key__ + ' $ ' 
-	let currentTreeDepth = ref(0) // 0 is the root
+	const constructedPrompt = (key__: string) =>  'nina.io' + ' $ ' 
+	// let currentTreeDepth = ref(0) // 0 is the root
 	let absoluteKey = ref("0")
 	let displayKey = ref('root')
 	let state = ref(tree)
 	let prompt_ = ref(constructedPrompt(displayKey.value))
 
-
-	
+	const getNodePathAsArray = (string: string) => string.split("-").map(number => Number(number));
 	const getNodeFromTree = (key): Array<strings> => { //"0-1"
-		const nodePath = () => { //exampleTree:  ["0", "1", "1", "0", ]  or the shallowest level ["0"]
-			let noHyphens = key.replace(/-/g, '');
-			let splitNumbers = noHyphens.split(/(?<=\d)(?=\d)/);
-			return splitNumbers
+		let rootTree = tree;
+		const nodePath = getNodePathAsArray(key) //exampleTree:  ["0", "1", "1", "0", ]  or the shallowest level ["0"]
+		console.log(nodePath)
+		for(var i = 1 ; i < nodePath.length - 1; i++) { //Previous Directory!
+			rootTree = rootTree.children[nodePath[i]]
 		}
-		let treeCopy = tree;
-		currentTreeDepth.value = nodePath().length 
-		for(var i = 0 ; i < nodePath().length; i++) {
-			treeCopy = treeCopy[nodePath()[i]]
-		}
-		return treeCopy
+		return rootTree
 	}
 	
 	const commands = ref([
@@ -61,26 +49,32 @@ import {tree } from './tree'
 				name: 'cd',
 				description: 'to navigate directories',
 				handler: (self,flags, fullcommand) => {
-					const targetPath = fullcommand.split(' ')[1]
 					let nextNode = null; 
-					if(currentTreeDepth.value == 0 ) {
-					 nextNode = state.value.find(node => node.label === targetPath)
-					} else {
-						 nextNode = state.value.children.find(node => node.label === targetPath)
+					const targetPath = fullcommand.split(' ')[1]
+					if(targetPath === "..") {
+							alert(JSON.stringify(absoluteKey.value))
+							let tempTree = getNodeFromTree(absoluteKey.value)
+							state.value = tempTree
+							displayKey.value = tempTree.label;
+							absoluteKey.value = tempTree.key
+							nextNode = tempTree
+							return `${tempTree.absolutePath} \n in ${displayKey.value}`				
 					}
+					if(targetPath === ".") {
+						state.value = tree
+						absoluteKey.value = "0"
+						displayKey.value = "root"
+						return `${state.value.absolutePath} \n in ${displayKey.value}`				
+					}
+					nextNode = state.value.children.find(node => node.label === targetPath)
 					if(nextNode) {
 						state.value = nextNode
-						console.log(state.value, "state.val")
-						currentTreeDepth.value += 1
+						displayKey.value = nextNode.label;
 						absoluteKey.value = nextNode.key
-						displayKey.value = targetPath
-
-						 prompt_.value = constructedPrompt(targetPath)
-						return `cd ${targetPath}. Now in ${targetPath}`
+						return `${state.value.absolutePath} \n in ${displayKey.value}`				
 					} else {
 						return 'No such directory'
 					}
-					
 				}
 		},
 		{
@@ -93,23 +87,16 @@ import {tree } from './tree'
 			description: 'get a list of all commands',
 			handler: (self, flags, fullCommand) => {		
 				 let str= '*****Available commands*****\n'
-					 self.forEach((self) => str += `${self.name} - ${self.description}\n`)
- 					TerminalService.emit('response', str)
+					 commands.value.forEach((self) => str += `${self.name} - ${self.description}\n`)
+ 				return str
 			}
 		},
 		{ name: 'ls',
 		  description: 'list all folders and files in directory',
 		  handler: (self,flags, fullCommand) => {
 				let list=``;
-				if(currentTreeDepth.value == 0 ) {
-					state.value.forEach(node => list += node.label + '\n')
-				} else {
-					console.log("here child?",state.value.children)
-
-					state.value.children.forEach(node => list += node.label + '\n')
-				}
+				state.value.children.forEach(node => list += node.label + node.ext + '\n')
 				return list
-
 		 }
 		}
 	]);
@@ -121,9 +108,6 @@ let  getAllCommands = commands.value.map(c => c.name).join(', ')
 		
 		const command_= commands.value.find(c => c.name === command.split(' ')[0] )
 		const flags = command.split(' ').shift()
-		// console.log(command, "command")
-		// console.log(parentCommand, "parentCommand")
-		// console.log(commands.value, "commands")
 		if(!command_){
 			TerminalService.emit('response', `"${command_}" error: Command not found`);
 		} else {
@@ -135,14 +119,36 @@ let  getAllCommands = commands.value.map(c => c.name).join(', ')
 <style >
 	:root {
 		--p-terminal-color: yellowgreen !important;
-		--p-terminal-prompt-gap: .5rem !important;
-		--p-terminal-command-response-margin: rem !important;
+		--p-terminal-prompt-gap: 1.5rem !important;
+		--p-terminal-command-response-margin: 1.5rem !important;
+		
 		/* https://primevue.org/terminal/ */
+	}
+
+	
+	.p-terminal {
+		background:  linear-gradient(to top, #011809, #000503) !important;
+		padding:1rem;
+	   font-family: monospace, monospace;
+		color: #fff;
+		-webkit-animation: glow 1s ease-in-out infinite alternate;
+		-moz-animation: glow 1s ease-in-out infinite alternate;
+		animation: glow 1s ease-in-out infinite alternate;
+		
 	}
 	.p-terminal-command-response {
 		white-space: pre;
 	}
 	.p-terminal-prompt-label	{
-		color: magenta;
+		color: #70cd92;
+	}
+	
+	@-webkit-keyframes p-terminal {
+		from {
+			text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+		}
+		to {
+			text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+		}
 	}
 </style>
