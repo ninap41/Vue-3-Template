@@ -2,6 +2,12 @@
 
 This template includes Vue3, Tailwind, PrimeVue, Router, and Pinia Store. Terminal (WIP with node Traversal). Composition Functions for using Modals and Toasts from PrimeVue. Initial setup in place for Node API server. Readme Renderer as well. This repo is hosted on Replit and constantly improving.
 [View Live Demo](https://vue-3-template-complete-ninap41.replit.app/)
+
+
+![picture1](https://raw.githubusercontent.com/ninap41/Vue-3-Template/main/public/screen1.png)
+![picture2](https://raw.githubusercontent.com/ninap41/Vue-3-Template/main/public/screen2.png)
+![picture3](https://raw.githubusercontent.com/ninap41/Vue-3-Template/main/public/screen3.png)
+
 ---
 
 ## Relevant Links
@@ -9,10 +15,11 @@ This template includes Vue3, Tailwind, PrimeVue, Router, and Pinia Store. Termin
 - [Tailwind CSS](https://tailwindcss.com/)
 - [PrimeVue](https://www.primefaces.org/primevue/)
 - [PrimeFlex](https://www.primefaces.org/primeflex/)
+- [Deno Server](https://docs.deno.com/) (Work In Progress)
 - Markdown Renderer
 - Dialog/ Modal Composition 
-- Toast Composition
-- local storage caching
+- Toast Composition Functions
+- local storage caching 
 
 ---
   
@@ -82,4 +89,3 @@ $ npm run lint
 
 Now, pressing the run button will generate a new production build and host the app in production mode.
 Enable Always-On for an even better hosting experience.
-

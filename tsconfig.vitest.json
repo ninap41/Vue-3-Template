@@ -1,7 +1,9 @@
 {
   "extends": "./tsconfig.app.json",
-  "exclude": [],
+  "exclude": [ "db/*.ts"],
   "compilerOptions": {
+    "ignoreDeprecations": "5.0",
+
     "composite": true,
     "lib": [],
     "types": ["node", "jsdom"]

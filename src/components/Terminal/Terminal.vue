@@ -1,7 +1,8 @@
 <template>
 	<h1>Terminal WIP</h1>
-	<p>displayKey - {{ displayKey }}</p>
-	<p>absoluteKey - {{ absoluteKey }}</p>
+	<p>An Experiment in Node traversal</p>
+	<p>displayKey - {{ displayKey }} / absoluteKey - {{ absoluteKey }}</p>
+	<p>Available commands : "ls", "help", "echo", "cd"</p>
 	<Terminal
 		welcomeMessage="Welcome to nina.io"
 		:prompt="prompt_"
@@ -23,6 +24,7 @@ let prompt_: Ref<string> = ref(constructedPrompt(displayKey.value))
 
 const getNodePathAsArray: (string: string) => number[] = (string: string) =>
 	string.split("-").map((number) => Number(number))
+
 const getNodeFromTree = (key: string): TreeNode => {
 	let rootTree: TreeNode = tree
 	const nodePath: Array<number> = getNodePathAsArray(key) // ["0", "1", "1", "0", ]  or the shallowest level ["0"]

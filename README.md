@@ -15,10 +15,11 @@ This template includes Vue3, Tailwind, PrimeVue, Router, and Pinia Store. Termin
 - [Tailwind CSS](https://tailwindcss.com/)
 - [PrimeVue](https://www.primefaces.org/primevue/)
 - [PrimeFlex](https://www.primefaces.org/primeflex/)
+- [Deno Server](https://docs.deno.com/) (Work In Progress)
 - Markdown Renderer
 - Dialog/ Modal Composition 
-- Toast Composition
-- local storage caching
+- Toast Composition Functions
+- local storage caching 
 
 ---
   
